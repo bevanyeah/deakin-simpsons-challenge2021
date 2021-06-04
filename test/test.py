@@ -17,6 +17,8 @@ if __name__=="__main__":
 
     input_dir = './/input'
     output_dir = './/output'
+    model = 'model.h5'
+
 
     #Check to see if input folder exists
     if not os.path.exists(input_dir):
@@ -33,13 +35,17 @@ if __name__=="__main__":
         os.makedirs(output_dir)
         print("Creating empty output directory")
 
+    # Check to see if model.hf exists
+    if not os.path.exists(model):
+        sys.exit("No model detected - please put " + model + " in this folder")
+
     print("Using input_dir: " + input_dir)
     print("Using output_dir: " + output_dir)
     print(sys.version)
     print("Tensorflow version: " + tf.__version__)
 
     # Loading the model.
-    model = 'model.h5'
+
     with h5py.File(model, mode='r') as f:
         class_names = f.attrs['class_names']
         image_size = f.attrs['image_size']
