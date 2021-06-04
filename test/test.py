@@ -17,6 +17,22 @@ if __name__=="__main__":
 
     input_dir = './/input'
     output_dir = './/output'
+
+    #Check to see if input folder exists
+    if not os.path.exists(input_dir):
+        os.makedirs(input_dir)
+        print("Creating empty input directory")
+
+    #Check to see if input has something in it
+    if len(os.listdir(input_dir)) == 0:
+
+        sys.exit("Input folder empty - fill me with images")
+
+    # Check to see if output exists
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+        print("Creating empty output directory")
+
     print("Using input_dir: " + input_dir)
     print("Using output_dir: " + output_dir)
     print(sys.version)
@@ -55,6 +71,9 @@ if __name__=="__main__":
     with open(os.path.join(output_dir, 'answer.txt'), 'w') as result_file:
         for i in range(len(files)):
             result_file.write(files[i] + ',' + class_names[y_predict[i]] + '\n')
+            #check to see is output folder exists for class
+            if not os.path.exists(output_dir+"\\"+class_names[y_predict[i]]):
+                os.makedirs(output_dir+"\\"+class_names[y_predict[i]])
             move(".\\input\\"+files[i], ".\\output\\"+class_names[y_predict[i]]+"\\"+str(int(y_score[i]*100))+"_"+files[i])
 
 print("Processing complete")
